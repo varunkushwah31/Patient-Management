@@ -24,7 +24,7 @@ public class PatientService {
         return patients.stream().map(PatientMapper::toDTO).toList();
     }
 
-    // ghar aa gaya
+    // Holika Dahan
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO){
         Patient newPatient = patientRepository.save(PatientMapper.toPatient(patientRequestDTO));
         return PatientMapper.toDTO(newPatient);
