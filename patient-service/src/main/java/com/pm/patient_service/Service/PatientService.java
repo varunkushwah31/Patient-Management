@@ -43,9 +43,10 @@ public class PatientService {
         if(patientRepository.existsByEmail(patientRequestDTO.getEmail())){
             throw new EmailAlreadyExistsException("A Patient with this email Already Exists" + patientRequestDTO.getEmail());
         }
-        patient.setAddress(patientRequestDTO.getAddress());
+
         patient.setName(patientRequestDTO.getName());
         patient.setEmail(patientRequestDTO.getEmail());
+        patient.setAddress(patientRequestDTO.getAddress());
         patient.setDateOfBirth(LocalDate.parse(patientRequestDTO.getDateOfBirth()));
 
         Patient updatedPatient  = patientRepository.save(patient);
