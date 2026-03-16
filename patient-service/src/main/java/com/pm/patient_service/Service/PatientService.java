@@ -2,6 +2,7 @@ package com.pm.patient_service.Service;
 
 import com.pm.patient_service.Dto.PatientRequestDTO;
 import com.pm.patient_service.Dto.PatientResponseDTO;
+import com.pm.patient_service.Exception.EmailAlreadyExistsException;
 import com.pm.patient_service.Mapper.PatientMapper;
 import com.pm.patient_service.Model.Patient;
 import com.pm.patient_service.Repository.PatientRepository;
@@ -24,8 +25,12 @@ public class PatientService {
         return patients.stream().map(PatientMapper::toDTO).toList();
     }
 
-    // Holika
     public PatientResponseDTO createPatient(PatientRequestDTO patientRequestDTO){
+
+        if(patientRepository.existsByEmail(patientRequestDTO.getEmail())){
+            throw new EmailAlreadyExistsException("A Patient with this Email already exists " + patientRequestDTO.getEmail());
+        }
+
         Patient newPatient = patientRepository.save(PatientMapper.toPatient(patientRequestDTO));
         return PatientMapper.toDTO(newPatient);
     }
